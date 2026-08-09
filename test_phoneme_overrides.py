@@ -152,6 +152,12 @@ class LoadRawOverrideTableTests(unittest.TestCase):
                 "ata": ["ɐ", "t", "ˈ", "ɑ", "ː"],
                 "eloheinu": ["ɪ", "l", "ə", "ʊ", "h", "ˈ", "e", "ɪ", "n", "ˌ", "u", "ː"],
                 "melekh": ["m", "ˈ", "ɛ", "l", "ɛ", "x", "x"],
+                # Added after the first four, on Vivian's finding that the table stopped
+                # short: these two carry no guttural, so unlike barukh/melekh they are
+                # voice-independent -- they use only phonemes English models actually
+                # produce. Stress corrections only. Acoustically confirmed on alba.
+                "adonai": ["ɐ", "d", "ə", "n", "ˈ", "a", "ɪ"],
+                "ha'olam": ["h", "ɐ", "ə", "ʊ", "l", "ˈ", "a", "m"],
             },
         )
 
