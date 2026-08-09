@@ -6,4 +6,33 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "fastmcp>=2.0",
+    # PINNED EXACTLY, and the exactness is load-bearing — do not relax to a range.
+    # The [[tool.uv.dependency-metadata]] override below is keyed to version "1.2.0".
+    # A range would admit a 1.2.1 the override does not match, silently disabling it,
+    # and the next `uv lock` on any host would pull the real "piper-phonemize" — which
+    # has no macOS arm64 wheel. Measured by Vivian (1a61bc9a): bumping the override's
+    # version key so it no longer matched brought piper-phonemize straight back into
+    # the lock. Carrying hand-verified metadata onto a release nobody has inspected is
+    # a claim we cannot back; lockstep with the override is the honest form.
+    "piper-tts==1.2.0",
+    "piper-phonemize-cross>=1.2.1",
+    "onnxruntime>=1.22.0,<2",
+    "numpy>=2.0",
 ]
+
+# piper-tts's own published metadata declares a dependency on the PyPI
+# package "piper-phonemize" (~=1.1.0), which has no wheel for macOS
+# arm64/Apple Silicon (confirmed: `uv sync` fails to install it on this
+# platform). This project has always actually used "piper-phonemize-cross"
+# instead -- a same-API fork with Apple Silicon wheels -- installed via
+# `uv pip install piper-tts --no-deps piper-phonemize-cross onnxruntime
+# numpy` (see add_piper_to_project.sh / README.md). This override
+# reproduces that --no-deps behaviour declaratively in the lockfile: it
+# replaces piper-tts's own requires-dist with the dependency set this
+# project actually installs, so `uv lock`/`uv sync` resolve to something
+# installable on Apple Silicon instead of failing on the unavailable
+# "piper-phonemize" wheel.
+[[tool.uv.dependency-metadata]]
+name = "piper-tts"
+version = "1.2.0"
+requires-dist = ["onnxruntime>=1.11,<2"]
