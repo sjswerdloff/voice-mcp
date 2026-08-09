@@ -10,7 +10,10 @@ mcp = FastMCP("voice-mcp")
 def load_voice_mapping():
     """Load voice name to model path mapping from voice_name_map.txt"""
     voice_map = {}
-    voice_file = Path("voice_name_map.txt")
+    # Get the directory where this script is located
+    script_dir = Path(__file__).parent
+    voice_file = script_dir / "voice_name_map.txt"
+    
     if voice_file.exists():
         with open(voice_file, 'r') as f:
             for line in f:
