@@ -5,7 +5,7 @@ description = "A bare bones mcp for a chatbot to talk agentically"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "fastmcp>=2.0",
+    "fastmcp>=3.4.10",
     # PINNED EXACTLY, and the exactness is load-bearing — do not relax to a range.
     # The [[tool.uv.dependency-metadata]] override below is keyed to version "1.2.0".
     # A range would admit a 1.2.1 the override does not match, silently disabling it,
